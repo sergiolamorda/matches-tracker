@@ -1,0 +1,31 @@
+.header {
+  background-color: #262626;
+  color: white;
+  padding: 1rem;
+
+  &__container {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 100%;
+
+    img {
+      height: 75px;
+      width: fit-content;
+    }
+
+    div {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      span {
+        font-size: 1.5rem;
+        font-weight: 500;
+      }
+    }
+  }
+}
