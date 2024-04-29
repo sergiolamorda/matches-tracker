@@ -1,0 +1,33 @@
+.matchDetailsPlayByPlayEvents {
+  display: flex;
+  flex-direction: column;
+
+  &__event {
+    display: grid;
+    grid-template-columns: 3fr 1fr 3fr;
+    padding: 0.5rem;
+  }
+
+  &__cronoContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__crono {
+    text-align: center;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: gray;
+  }
+
+  &__score {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+  
+  &__eventDescription {
+    align-content: center;
+  }
+}

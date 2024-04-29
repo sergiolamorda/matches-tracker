@@ -6,13 +6,13 @@
   &__container {
     display: flex;
     gap: 2rem;
-    justify-content: center;
-    max-width: 1200px;
+    justify-content: start;
+    max-width: 1100px;
     margin: 0 auto;
     height: 100%;
 
     img {
-      height: 75px;
+      height: 40px;
       width: fit-content;
     }
 

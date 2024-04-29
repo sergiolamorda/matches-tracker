@@ -1,0 +1,50 @@
+.matchDetailsHeader {
+  display: grid;
+  grid-template-columns: 0.75fr 2fr 0.75fr;
+  justify-content: space-between;
+  background-color: black;
+  color: white;
+
+  &__logoContainer {
+    margin: auto;
+    filter: grayscale(0.9);
+    overflow: hidden;
+  }
+
+  &__logo {
+    width: 100%;
+    opacity: 0.15;
+  }
+
+  &__scoreContainer {
+    display: grid;
+    height: fit-content;
+    grid-template-columns: repeat(5, 2.25rem);
+    gap: 2.25rem;
+    justify-items: center;
+    align-items: center;
+    padding: 1rem;
+  }
+
+  &__scorePoints {
+    font-size: 1.875rem;
+    font-weight: bold;
+  }
+
+  &__matchStatus {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  &__scoreTeamContainer {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  &__scoreLogo {
+    width: 100%;
+  }
+}

@@ -1,5 +1,9 @@
-
-import type { Match, Team, Period, Event, Player, PlayerStatistics } from "../domain/Match";
+import type { Match } from '../domain/Match';
+import type { Team } from "../domain/Team";
+import type { Period } from "../domain/Period";
+import { MatchEvent, isEndMatchEvent } from "../domain/MatchEvent";
+import type { Player } from "../domain/Player";
+import type { PlayerStatistics } from "../domain/PlayerStatistics";
 import { MatchRepository } from "../domain/MatchRepository";
 
 // const ENDPOINT = 'https://api2.acb.com/api/v1/openapilive/PlayByPlay/matchevents';
@@ -38,7 +42,7 @@ async function get(matchId: number) {
 
   const match = mapResponse(response);
 
-  Promise.resolve(match);
+  return Promise.resolve(match);
 }
 
 function mapResponse(response: Array<any>): Match {
@@ -51,17 +55,20 @@ function mapResponse(response: Array<any>): Match {
   localTeam.players = mapTeamPlayersByResponse(response, localTeam);
   visitorTeam.players = mapTeamPlayersByResponse(response, visitorTeam);
 
-  console.log(localTeam);
-  console.log(visitorTeam);
+  const periods = mapPeriodsByResponse(response, localTeam, visitorTeam)
 
-  return {
+  const endMatchEvent = getEndMatchEventByResponse(response);
+
+  const match = {
     id: response[0].id_match,
     localTeam: localTeam,
     visitorTeam: visitorTeam,
-    localScore: 0,
-    visitorScore: 0,
-    periods: [],
+    localScore: endMatchEvent?.score_local,
+    visitorScore: endMatchEvent?.score_visitor,
+    periods: periods,
   }
+
+  return match;
 }
 
 function mapTeamByResponse(eventResponse: any): Team {
@@ -81,7 +88,7 @@ function mapTeamPlayersByResponse(response: any, team: Team): Array<Player> {
       return players;
     }
 
-    let findedPlayer = players.find((player: Player) => player.id === event.license.id_person);
+    const findedPlayer = players.find((player: Player) => player.id === event.license.id_person);
 
     if (!findedPlayer) {
       players.push({
@@ -101,7 +108,7 @@ function mapTeamPlayersByResponse(response: any, team: Team): Array<Player> {
     }
 
     return players;
-  }, [] as Array<Player>)
+  }, [] as Array<Player>);
 }
 
 function mapPlayerStatisticsByEventResponse(eventResponse: any): PlayerStatistics {
@@ -126,4 +133,45 @@ function mapPlayerStatisticsByEventResponse(eventResponse: any): PlayerStatistic
     totalRebound: eventResponse.statistics.total_rebound,
     turnovers: eventResponse.statistics.turnovers,
   }
+}
+
+function mapPeriodsByResponse(response: any, localTeam: Team, visitorTeam: Team): Array<Period> {
+  return response.reduce((periods: Array<Period>, event: any) => {
+    if (!event.period) {
+      return periods;
+    }
+
+    let period = periods.find((period) => period.id === event.period);
+
+    if (!period) {
+      period = {
+        id: event.period,
+        events: []
+      }
+
+      periods.push(period);
+    }
+
+    const team = event.local ? localTeam : visitorTeam;
+
+    period.events.push({
+      eventType: event.id_playbyplaytype,
+      team: team,
+      player: team.players.find((player) => player.id === event.id_team) || null,
+      periodId: event.period,
+      crono: event.crono,
+      minute: event.minute,
+      second: event.second,
+      localScore: event.score_local,
+      visitorScore: event.score_visitor,
+      description: event.type.description,
+      localEvent: event.local
+    } as MatchEvent)
+
+    return periods;
+  }, [] as Array<Period>);
+}
+
+function getEndMatchEventByResponse(response: any): any {
+  return response.find((event: any) => event.id_playbyplaytype === 123);
 }

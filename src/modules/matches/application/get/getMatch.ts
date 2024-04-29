@@ -1,5 +1,6 @@
 import { MatchRepository } from "../../domain/MatchRepository";
+import { Match } from "../../domain/Match";
 
-export function getMatch({ repository }: { repository: MatchRepository }) {
-  return repository.get();
+export function getMatch(repository: MatchRepository, matchId: number): Promise<Match|null> {
+  return repository.get(matchId);
 }

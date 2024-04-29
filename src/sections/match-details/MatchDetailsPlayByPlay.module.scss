@@ -1,0 +1,38 @@
+.matchDetailsPlayByPlay {
+  width: 100%;
+  padding: 1rem;
+
+  &__filtersContainer {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__teamsContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  &__teamContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+
+    img {
+      height: 40px;
+    }
+
+    p {
+      font-size: 1.15rem;
+      font-weight: bold;
+    }
+  }
+
+  &__playsContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3rem;
+  }
+
+}
