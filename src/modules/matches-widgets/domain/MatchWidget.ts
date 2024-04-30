@@ -2,6 +2,7 @@ import { isMatchWidgetIdValid, MatchWidgetIdNotValidError } from "./MatchWidgetI
 
 export interface MatchWidget {
   id: number;
+  name: string;
 }
 
 export function ensureMatchIsValid({ id }: MatchWidget): void {

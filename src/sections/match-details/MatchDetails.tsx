@@ -2,6 +2,8 @@ import { Link, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { MatchDetailsHeader } from './MatchDetailsHeader';
 import { MatchDetailsPlayByPlay } from './MatchDetailsPlayByPlay';
+import { MatchDetailsPlayerStats } from './MatchDetailsPlayerStats';
+import { MatchDetailsMostPointsDifference } from './MatchDetailsMostPointsDifference'; 
 import { useMatchContext } from './MatchContext';
 import { Match } from '../../modules/matches/domain/Match';
 import styles from './MatchDetails.module.scss';
@@ -53,17 +55,17 @@ export function MatchDetails() {
                 <>
                   <Tabs>
                     <Tab tab={1} label="Play-By-Play" />
-                    <Tab tab={2} label="Jugadores" />
-                    <Tab tab={3} label="Diferencia" />
+                    <Tab tab={2} label="Estadísticas de jugadores" />
+                    <Tab tab={3} label="Mayor diferencia de puntos" />
                   </Tabs>
                   <TabPanel tab={1}>
                     <MatchDetailsPlayByPlay match={match} />
                   </TabPanel>
                   <TabPanel tab={2}>
-                    <p>Hola 2</p>
+                    <MatchDetailsPlayerStats match={match} />
                   </TabPanel>
                   <TabPanel tab={3}>
-                    <p>Hola 3</p>
+                    <MatchDetailsMostPointsDifference match={match} />
                   </TabPanel>
                 </>
               </TabsContextProvider>

@@ -6,8 +6,7 @@ import type { Player } from "../domain/Player";
 import type { PlayerStatistics } from "../domain/PlayerStatistics";
 import { MatchRepository } from "../domain/MatchRepository";
 
-// const ENDPOINT = 'https://api2.acb.com/api/v1/openapilive/PlayByPlay/matchevents';
-const ENDPOINT = 'https://api2.acb.com/api/v1/openapilive/PlayByPlay/matchevents?idMatch=103789';
+const ENDPOINT = 'https://api2.acb.com/api/v1/openapilive/PlayByPlay/matchevents';
 const TOKEN = import.meta.env.VITE_ACB_PUBLIC_TOKEN;
 
 import EXAMPLE_RESPONSE from '../../../response_example.json';
@@ -19,24 +18,20 @@ export function createAcbApiMatchRepository(): MatchRepository {
 }
 
 async function get(matchId: number) {
-  /*
-  const response = await fetch(ENDPOINT, {
+  const response = await fetch(`${ENDPOINT}?idMatch=${matchId}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${TOKEN}`
     }
   }).then(response => response.json());
-  */
 
   // console.log(EXAMPLE_RESPONSE);
-
-  /*
-  if (!response) {
+ 
+  if (!response || response.length === 0) {
     return null;
   }
-  */
 
-  const response = EXAMPLE_RESPONSE;
+  // const response = EXAMPLE_RESPONSE;
 
   console.log(response);
 
@@ -98,6 +93,7 @@ function mapTeamPlayersByResponse(response: any, team: Team): Array<Player> {
         facePicture: event.license.media.find((media: any) => media?.type === 'foto_de_cara')?.url,
         bodyPicture: event.license.media.find((media: any) => media?.type === 'foto_cuerpo')?.url,
         statistics: mapPlayerStatisticsByEventResponse(event),
+        shirtNumber: event.shirt_number,
       })
 
       return players;
@@ -157,7 +153,7 @@ function mapPeriodsByResponse(response: any, localTeam: Team, visitorTeam: Team)
     period.events.push({
       eventType: event.id_playbyplaytype,
       team: team,
-      player: team.players.find((player) => player.id === event.id_team) || null,
+      player: team.players.find((player) => player.id === event.license?.id_person) || null,
       periodId: event.period,
       crono: event.crono,
       minute: event.minute,

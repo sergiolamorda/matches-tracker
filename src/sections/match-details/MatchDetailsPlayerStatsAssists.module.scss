@@ -1,0 +1,50 @@
+.matchDetailsPlayerStatsAssists {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th {
+      text-align: left;
+      padding: 0.5rem;
+      border-bottom: 1px solid #e0e0e0;
+      font-size: 0.75rem;
+      font-weight: normal;
+      text-align: center;
+    }
+
+    th:first-child {
+      text-align: left;
+    }
+
+    th:last-child {
+      text-align: right;
+    }
+
+    td {
+      padding: 0.5rem;
+      border-bottom: 1px solid #e0e0e0;
+      font-size: 0.75rem;
+      text-align: center;
+    }
+
+    td:first-child {
+      font-size: 0.9rem;
+      text-align: left;
+    }   
+
+    td:last-child {
+      text-align: right;
+      font-size: 0.9rem;
+      font-weight: bold;
+      background-color: #e0e0e0;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+  }
+}

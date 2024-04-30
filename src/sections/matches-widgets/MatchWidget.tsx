@@ -10,6 +10,7 @@ export function MatchWidget({ matchWidget }: { matchWidget: MatchWidget }) {
       <Card>
         <div className={styles.container}>
           {matchWidget.id}
+          {matchWidget.name}
         </div>
       </Card>
     </Link>

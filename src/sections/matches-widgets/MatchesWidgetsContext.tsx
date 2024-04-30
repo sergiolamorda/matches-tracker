@@ -3,10 +3,12 @@ import React, { createContext, useState, useEffect, useContext } from "react";
 import { MatchWidget } from "../../modules/matches-widgets/domain/MatchWidget";
 import { MatchWidgetRepository } from "../../modules/matches-widgets/domain/MatchWidgetRepository";
 import { getAllMatchesWidgets } from "../../modules/matches-widgets/application/get-all/getAllMatchesWidgets";
+import { createMatchWidget as createMatchWidgetService } from "../../modules/matches-widgets/application/create/createMatchWidget";
 import { config } from "../../tracker_config";
 
 export interface ContextState {
   matchesWidgets: MatchWidget[];
+  createMatchWidget: (matchWidget: MatchWidget) => void;
 }
 
 export const MatchesWidgetsContext = createContext({} as ContextState);
@@ -26,12 +28,23 @@ export function MatchesWidgetsContextProvider({
     })
   }
 
+  const createMatchWidget = (matchWidget: MatchWidget) => {
+    const response = createMatchWidgetService(repository, matchWidget);
+
+    if (response instanceof Error) {
+      console.error(response);
+      return;
+    }
+
+    setMatchesWidgets([...matchesWidgets, matchWidget]);
+  }
+
   useEffect(() => {
     loadAllMatches();
   }, [repository])
 
   return (
-    <MatchesWidgetsContext.Provider value={{ matchesWidgets }}>
+    <MatchesWidgetsContext.Provider value={{ matchesWidgets, createMatchWidget }}>
       {children}
     </MatchesWidgetsContext.Provider>
   )

@@ -1,4 +1,4 @@
-.matchDetailsPlayByPlay {
+.matchDetailsPlayerStats {
   width: 100%;
   padding: 1rem;
 
@@ -29,11 +29,4 @@
       font-weight: bold;
     }
   }
-
-  &__playsContainer {
-    display: flex;
-    flex-direction: column;
-    margin-top: 3rem;
-  }
-
 }

@@ -50,7 +50,6 @@ export interface MatchEvent {
 
 export function isMatchEventPlayByPlayValid(matchEvent: MatchEvent): boolean {
   switch (matchEvent.eventType) {
-    case START_MATCH_EVENT_ID:
     case START_PERIOD_EVENT_ID:
     case WON_JUMP_EVENT_ID:
     case LOST_JUMP_EVENT_ID:
@@ -81,7 +80,17 @@ export function isMatchEventPlayByPlayValid(matchEvent: MatchEvent): boolean {
     case DUNK_EVENT_ID:
     case ASSIST_FOUL_RECEIVED_EVENT_ID:
     case FAST_BREAK_THREE_POINTS_EVENT_ID:
-    case END_MATCH_EVENT_ID:
+      return true;
+    default:
+      return false;
+  }
+}
+
+export function isMatchEventScored(matchEvent: MatchEvent): boolean {
+  switch (matchEvent.eventType) {
+    case TWO_POINTS_SHOT_MADE_EVENT_ID:
+    case THREE_POINTS_SHOT_MADE_EVENT_ID:
+    case FREE_THROW_MADE_EVENT_ID:
       return true;
     default:
       return false;

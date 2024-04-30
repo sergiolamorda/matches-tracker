@@ -1,8 +1,13 @@
 .tab {
   padding: 0.5rem 1rem;
 
+  &[aria-selected="true"] {
+    font-weight: bold;
+    border-bottom: 0.25rem solid rgba(0, 0, 0, 0.9);
+  }
+
   &:hover {
-    border-bottom: 0.25rem solid black;
+    border-bottom: 0.25rem solid rgba(0, 0, 0, 0.9);
     cursor: pointer;
   }
 }

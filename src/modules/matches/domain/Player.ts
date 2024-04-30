@@ -7,4 +7,5 @@ export interface Player {
   facePicture: string | null,
   bodyPicture: string | null,
   statistics: PlayerStatistics,
+  shirtNumber: number,
 }
