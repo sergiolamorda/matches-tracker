@@ -9,6 +9,7 @@
   font-size: 16px;
   margin: 4px 2px;
   cursor: pointer;
+  border-radius: 4px;
 
   &:hover {
     background-color: #0056b3;
@@ -19,7 +20,7 @@
     cursor: not-allowed;
   }
 
-  &--secondary {
+  &[data-variant='secondary'] {
     background-color: #6c757d;
 
     &:hover {
@@ -35,7 +36,7 @@
     }
   }
 
-  &--primary {
+  &[data-variant='primary'] {
     background-color: #007bff;
 
     &:hover {
@@ -43,7 +44,7 @@
     }
   }
 
-  &--success {
+  &[data-variant='success'] {
     background-color: #28a745;
 
     &:hover {
@@ -51,7 +52,7 @@
     }
   }
 
-  &--warning {
+  &[data-variant='warning'] {
     background-color: #ffc107;
 
     &:hover {
@@ -59,57 +60,50 @@
     }
   }
 
-  &--info {
+  &[data-variant='info'] {
     background-color: #17a2b8;
+    color: white;
 
     &:hover {
       background-color: #138496;
     }
   }
 
-  &--light {
+  &[data-variant='light'] {
     background-color: #f8f9fa;
+    color: #212529;
 
     &:hover {
       background-color: #e2e6ea;
     }
   }
 
-  &--dark {
+  &[data-variant='dark'] {
     background-color: #343a40;
+    color: white;
 
     &:hover {
       background-color: #23272b;
     }
   }
 
-  &--small {
+  &[data-size='small'] {
     padding: 5px 10px;
     font-size: 14px;
   }
 
-  &--large {
+  &[data-size='large'] {
     padding: 15px 30px;
     font-size: 18px;
   }
 
-  &--block {
-    display: block;
-    width: 100%;
-  }
-
-  &--rounded {
-    border-radius: 50px;
-  }
-
-  &--full {
-    width: 100%;
-  }
-
-  &--disabled {
+  &[disabled] {
     background-color: #6c757d;
     cursor: not-allowed;
   }
 
-  
+  &[data-full-width='true'] {
+    display: block;
+    width: 100%;
+  }  
 }

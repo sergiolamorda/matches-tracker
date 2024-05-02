@@ -1,12 +1,113 @@
 import { Match } from '../../modules/matches/domain/Match';
 import { Player } from '../../modules/matches/domain/Player';
+import { Card } from '../../components/Card/Card';
+import { PieChart } from '../../components/PieChart/PieChart';
 
 import styles  from './MatchDetailsPlayerStatsPoints.module.scss';
 
 export function MatchDetailsPlayerStatsPoints({ match }: { match: Match }) {
+  function getPlayerPointsStats(player: Player): {
+    triedShots: {
+      onePointShot: number,
+      twoPointsShot: number,
+      threePointsShot: number,
+      total: number,
+    },
+    succesShots: {
+      onePointShot: number,
+      twoPointsShot: number,
+      threePointsShot: number,
+      total: number,
+    },
+  } {
+    const triedShots = {
+      onePointShot: player.statistics.tried.onePointShot,
+      twoPointsShot: player.statistics.tried.twoPointsShot,
+      threePointsShot: player.statistics.tried.threePointsShot,
+      total: player.statistics.tried.onePointShot + player.statistics.tried.twoPointsShot + player.statistics.tried.threePointsShot,
+    }
+
+    const succesShots = {
+      onePointShot: player.statistics.success.onePointShot,
+      twoPointsShot: player.statistics.success.twoPointsShot,
+      threePointsShot: player.statistics.success.threePointsShot,
+      total: player.statistics.success.onePointShot + player.statistics.success.twoPointsShot + player.statistics.success.threePointsShot,
+    }
+
+    return { triedShots, succesShots }
+  }
 
   function orderPlayersByPoints(players: Player[]) {
     return players.sort((a, b) => b.statistics.points - a.statistics.points);
+  }
+
+  function renderCard(player: Player) {
+    return (
+      <Card key={`points-player-${player.id}`}>
+        <div className={styles.matchDetailsPlayerStatsPoints__playerCard}>
+          <div className={styles.matchDetailsPlayerStatsPoints__playerCardShow}>
+            <div className={styles.matchDetailsPlayerStatsPoints__playerCardtitle}>{player.name}</div>
+            <div className={styles.matchDetailsPlayerStatsPoints__playerCardPoints}>{player.statistics.points} puntos</div>
+            <div className={styles.matchDetailsPlayerStatsPoints__playerCardPicture}>
+              <img src={player.bodyPicture} alt={player.name} />
+            </div>
+          </div>
+          <div className={styles.matchDetailsPlayerStatsPoints__playerCardStats}>
+            <div className={styles.matchDetailsPlayerStatsPoints__playerCardStat}>
+              <PieChart
+                percentage={player.statistics.success.twoPointsShot / player.statistics.tried.twoPointsShot * 100}
+                width={50}
+                thickness={3}
+                color="black"
+              />
+              <div className={styles.matchDetailsPlayerStatsPoints__playerCardStatInfoContainer}>
+                <div className={styles.matchDetailsPlayerStatsPoints__playerCardStatLabel}>Tiros de campo</div>
+                <div>
+                  <div className={styles.matchDetailsPlayerStatsPoints__playerCardStatInfo}>
+                    {player.statistics.success.twoPointsShot} / {player.statistics.tried.twoPointsShot}
+                  
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className={styles.matchDetailsPlayerStatsPoints__playerCardStat}>
+              <PieChart
+                percentage={player.statistics.success.onePointShot / player.statistics.tried.onePointShot * 100}
+                width={50}
+                thickness={3}
+                color="black"
+              />
+              <div className={styles.matchDetailsPlayerStatsPoints__playerCardStatInfoContainer}>
+                <div className={styles.matchDetailsPlayerStatsPoints__playerCardStatLabel}>Tiros libres</div>
+                <div>
+                  <div className={styles.matchDetailsPlayerStatsPoints__playerCardStatInfo}>
+                    {player.statistics.success.onePointShot} / {player.statistics.tried.onePointShot}
+                  
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className={styles.matchDetailsPlayerStatsPoints__playerCardStat}>
+              <PieChart
+                percentage={player.statistics.success.threePointsShot / player.statistics.tried.threePointsShot * 100}
+                width={50}
+                thickness={3}
+                color="black"
+              />
+              <div className={styles.matchDetailsPlayerStatsPoints__playerCardStatInfoContainer}>
+                <div className={styles.matchDetailsPlayerStatsPoints__playerCardStatLabel}>Tiros de tres</div>
+                <div>
+                  <div className={styles.matchDetailsPlayerStatsPoints__playerCardStatInfo}>
+                    {player.statistics.success.threePointsShot} / {player.statistics.tried.threePointsShot}
+                  
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Card>
+    )
   }
 
   function renderTable(players: Player[]) {
@@ -37,11 +138,39 @@ export function MatchDetailsPlayerStatsPoints({ match }: { match: Match }) {
   }
 
   return (
-    <>
-      <div className={styles.matchDetailsPlayerStatsPoints}>
-        {renderTable(match.localTeam.players)}
-        {renderTable(match.visitorTeam.players)}
+    <div className={styles.matchDetailsPlayerStatsPoints}>
+      <div className={styles.matchDetailsPlayerStatsPoints__cardsContainer}>
+        <div className={styles.matchDetailsPlayerStatsPoints__cards}>
+          <div className={styles.matchDetailsPlayerStatsPoints__sectionTitle}>
+            <img src={match.localTeam.logo} />
+            Top 3 jugadores
+          </div>
+          {orderPlayersByPoints(match.localTeam.players).slice(0, 3).map((player) => renderCard(player))}
+        </div>
+        <div className={styles.matchDetailsPlayerStatsPoints__cards}>
+          <div className={styles.matchDetailsPlayerStatsPoints__sectionTitle}>
+          <img src={match.visitorTeam.logo} />
+            Top 3 jugadores
+          </div>
+          {orderPlayersByPoints(match.visitorTeam.players).slice(0, 3).map((player) => renderCard(player))}
+        </div>
       </div>
-    </>
+      <div className={styles.matchDetailsPlayerStatsPoints__tablesContainer}>
+        <div>
+          <div className={styles.matchDetailsPlayerStatsPoints__sectionTitle}>
+            <img src={match.localTeam.logo} />
+            Todos los jugadores
+          </div>
+          {renderTable(match.localTeam.players)}
+        </div>
+        <div>
+          <div className={styles.matchDetailsPlayerStatsPoints__sectionTitle}>
+            <img src={match.visitorTeam.logo} />
+            Todos los jugadores
+          </div>
+          {renderTable(match.visitorTeam.players)}
+        </div>
+      </div>
+    </div>
   )
 };

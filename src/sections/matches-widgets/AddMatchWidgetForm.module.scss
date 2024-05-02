@@ -1,0 +1,18 @@
+.addMatchWidgetForm {
+  height: 100%;
+
+
+  &__initialState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+  }
+
+  h3 {
+    margin: 0;
+    margin-bottom: 1rem;
+  }
+}

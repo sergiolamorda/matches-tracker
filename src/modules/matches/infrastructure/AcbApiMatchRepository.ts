@@ -25,15 +25,11 @@ async function get(matchId: number) {
     }
   }).then(response => response.json());
 
-  // console.log(EXAMPLE_RESPONSE);
+  // const response = EXAMPLE_RESPONSE;
  
   if (!response || response.length === 0) {
     return null;
   }
-
-  // const response = EXAMPLE_RESPONSE;
-
-  console.log(response);
 
   const match = mapResponse(response);
 

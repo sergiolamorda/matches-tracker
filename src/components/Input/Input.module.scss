@@ -1,0 +1,57 @@
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+
+  &[data-full-width='true'] {
+    width: 100%;
+  }
+
+  label {
+    margin-bottom: 5px;
+  }
+
+  .error {
+    color: #dc3545;
+    margin-top: 5px;
+  }
+
+  .input {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+  
+    &:focus {
+      outline: none;
+      border-color: #007bff;
+    }
+  
+    &.error {
+      border-color: #dc3545;
+    }
+  
+    &.disabled {
+      background-color: #f8f9fa;
+      color: #6c757d;
+      cursor: not-allowed;
+    }
+  
+    &[data-size='small'] {
+      padding: 6px;
+    }
+  
+    &[data-size='large'] {
+      padding: 10px;
+    }
+
+    &[type='number'] {
+      appearance: textfield;
+      -moz-appearance: textfield;
+      -webkit-appearance: textfield;
+      -o-appearance: textfield;
+    }
+  }
+}
+

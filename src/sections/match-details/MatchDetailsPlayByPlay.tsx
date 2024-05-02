@@ -1,4 +1,3 @@
-import { ReactElement, useMemo } from "react";
 import { Match } from "../../modules/matches/domain/Match";
 import { Tabs } from "../../components/Tabs/Tabs";
 import { Tab } from "../../components/Tabs/Tab";

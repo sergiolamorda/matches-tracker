@@ -15,6 +15,7 @@ export function MatchesWidgetsList() {
       <Container>
         <>
           <h1>Mis partidos</h1>
+          {matchesWidgets.length === 0 && <p>No tienes partidos configurados.</p>}
           <section className={styles.container}>
             {matchesWidgets.map((matchWidget) => (
               <MatchWidget key={`match-widget-${matchWidget.id}`} matchWidget={matchWidget} />

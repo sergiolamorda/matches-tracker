@@ -28,15 +28,13 @@ export function MatchesWidgetsContextProvider({
     })
   }
 
-  const createMatchWidget = (matchWidget: MatchWidget) => {
-    const response = createMatchWidgetService(repository, matchWidget);
-
-    if (response instanceof Error) {
-      console.error(response);
-      return;
-    }
-
-    setMatchesWidgets([...matchesWidgets, matchWidget]);
+  const createMatchWidget = ({ id, localLogo, localName, visitorLogo, visitorName }: MatchWidget) => {
+    const matchWidget = { id, localLogo, localName, visitorLogo, visitorName } as MatchWidget;
+    
+    createMatchWidgetService(repository, matchWidget)
+      .then(() => {
+        setMatchesWidgets([...matchesWidgets, matchWidget]);
+      });
   }
 
   useEffect(() => {

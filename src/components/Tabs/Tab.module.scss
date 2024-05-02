@@ -1,13 +1,19 @@
 .tab {
+  display: flex;
+  align-items: center;
+  margin-bottom: -1px;
   padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem; 
+  color: #020303;
+  border-bottom: 2px solid transparent;
 
   &[aria-selected="true"] {
-    font-weight: bold;
-    border-bottom: 0.25rem solid rgba(0, 0, 0, 0.9);
+    border-bottom: 2px solid #020303;
+    color: #020303;
   }
 
   &:hover {
-    border-bottom: 0.25rem solid rgba(0, 0, 0, 0.9);
     cursor: pointer;
   }
 }

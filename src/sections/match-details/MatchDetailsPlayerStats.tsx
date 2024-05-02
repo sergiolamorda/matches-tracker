@@ -20,16 +20,6 @@ export function MatchDetailsPlayerStats({ match }: { match: Match}) {
             <Tab tab={2} label="Asistencias" />
           </Tabs>
         </div>
-        <div className={styles.matchDetailsPlayerStats__teamsContainer}>
-          <div className={styles.matchDetailsPlayerStats__teamContainer}>
-            <img src={match.localTeam.logo} />
-            <p>{match.localTeam.longName}</p>
-          </div>
-          <div className={styles.matchDetailsPlayerStats__teamContainer}>
-            <img src={match.visitorTeam.logo} />
-            <p>{match.visitorTeam.longName}</p>
-          </div>
-        </div>
         <div className={styles.matchDetailsPlayerStats__statsContainer}>
           <TabPanel tab={0}>
             <MatchDetailsPlayerStatsPoints match={match} />

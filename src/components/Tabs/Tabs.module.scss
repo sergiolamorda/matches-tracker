@@ -1,6 +1,8 @@
 .tabs {
   display: flex;
-  flex-direction: row;
-  gap: 0.75rem;
-  width: fit-content;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  padding-bottom: 1px;
+  overflow-x: auto;
+  box-shadow: 0 -1px 0 #e0e0e0 inset;
 }

@@ -1,5 +1,12 @@
-
 export function isMatchWidgetIdValid(id: number): boolean {
+  if (isNaN(id)) {
+    return false;
+  }
+
+  if (id <= 0) {
+    return false;
+  }
+
   return true;
 }
 

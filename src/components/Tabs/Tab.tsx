@@ -1,7 +1,15 @@
 import styles from './Tab.module.scss'
 import { useTabsContext } from './TabsContext'
 
-export function Tab({ label, tab }: { label: string, tab: number }) {
+export function Tab({ 
+  label, 
+  icon,
+  tab,
+}: { 
+  label: string,
+  icon?: React.ReactElement,
+  tab: number,
+}) {
   const { activeTab, setActiveTab } = useTabsContext();
 
   return (
@@ -12,6 +20,7 @@ export function Tab({ label, tab }: { label: string, tab: number }) {
       role="tab"
     >
       {label}
+      {icon}
     </div>
   )
 }

@@ -35,7 +35,6 @@ export function MatchDetails() {
         return
       }
 
-      console.log(match);
       setMatch(match);
       setLoading(false);
     })
@@ -44,7 +43,10 @@ export function MatchDetails() {
   return (    
     <>
       {loading && (
-        <p>Loading...</p>
+        <p>Cargando...</p>
+      )}
+      {!loading && !match && (
+        <p>No se encontró el partido, <Link to="/">volver al inicio</Link></p>
       )}
       {!loading && match && (
         <div className={styles.matchDetails}>
@@ -55,8 +57,8 @@ export function MatchDetails() {
                 <>
                   <Tabs>
                     <Tab tab={1} label="Play-By-Play" />
-                    <Tab tab={2} label="Estadísticas de jugadores" />
-                    <Tab tab={3} label="Mayor diferencia de puntos" />
+                    <Tab tab={2} label="Jugadores" />
+                    <Tab tab={3} label="Diferencia de puntos" />
                   </Tabs>
                   <TabPanel tab={1}>
                     <MatchDetailsPlayByPlay match={match} />

@@ -9,7 +9,7 @@ import { MatchWidgetMother } from "../../modules/matches-widgets/domain/MatchWid
 
 const mockMatchWidgetRepository = mock<MatchWidgetRepository>();
 
-describe("MatchesWidgetsList component", () => {
+describe("MatchesWidgetsList", () => {
   it("show all widgets", async () => {
     const matchesWidgets = MatchWidgetMother.createList(2);
 
@@ -22,7 +22,24 @@ describe("MatchesWidgetsList component", () => {
       , { route: "/" }
     );
 
-    const card = await screen.findByText(matchesWidgets[0].id);
+    const card = await screen.findByText(matchesWidgets[0].localName);
     expect(card).toBeInTheDocument();
+
+    const card2 = await screen.findByText(matchesWidgets[1].visitorName);
+    expect(card2).toBeInTheDocument();
+  })
+
+  it("show message when no widgets", async () => {
+    mockMatchWidgetRepository.getAll.mockResolvedValue([]);
+
+    renderWithRouter(
+      <MatchesWidgetsContextProvider repository={mockMatchWidgetRepository}>
+        <MatchesWidgetsList />
+      </MatchesWidgetsContextProvider>
+      , { route: "/" }
+    );
+
+    const message = await screen.findByText(/No tienes partidos/i);
+    expect(message).toBeInTheDocument();
   })
 });

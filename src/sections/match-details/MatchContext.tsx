@@ -11,7 +11,7 @@ const MatchContext = createContext({} as ContextState);
 
 export function MatchContextProvider({ children, repository }: { children: React.ReactElement, repository: MatchRepository }) {
   
-  async function get(matchId: number) {
+  async function get(matchId: number): Promise<Match|null> {
     return await getMatch(repository, matchId);
   }
 

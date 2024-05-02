@@ -1,9 +1,10 @@
 .matchDetailsHeader {
   display: grid;
-  grid-template-columns: 0.75fr 2fr 0.75fr;
+  grid-template-columns: 0.5fr 2fr 0.5fr;
   justify-content: space-between;
-  background-color: black;
-  color: white;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 1rem;
+  background: radial-gradient(circle at 50.1% 10.8%, rgb(28, 28, 28) 0%, rgb(0, 0, 0) 99.4%);
 
   &__logoContainer {
     margin: auto;
@@ -13,21 +14,22 @@
 
   &__logo {
     width: 100%;
-    opacity: 0.15;
+    opacity: 0.1;
   }
 
   &__scoreContainer {
     display: grid;
     height: fit-content;
-    grid-template-columns: repeat(5, 2.25rem);
+    grid-template-columns: 4rem 2.25rem 2.25rem 2.25rem 4rem;
     gap: 2.25rem;
     justify-items: center;
     align-items: center;
     padding: 1rem;
+    margin: auto;
   }
 
   &__scorePoints {
-    font-size: 1.875rem;
+    font-size: 2.25rem;
     font-weight: bold;
   }
 
@@ -46,5 +48,93 @@
 
   &__scoreLogo {
     width: 100%;
+  }
+
+  &__detailsContainer {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  &__stats {
+    display: flex;
+    align-items: center;
+    font-size: 0.75rem;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-self: center;
+
+    h3 {
+      text-transform: uppercase;
+      font-size: 0.875rem;
+    }
+  }
+
+  &__statContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    align-items: center;
+    width: 100%;
+  }
+
+  &__statContainerPie {
+    margin: auto;
+  }
+
+  &__statTitle {
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  &__statValue {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 0.5rem;
+  }
+
+  // Media query
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+
+    &__logoContainer,
+    &__stats {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    &__scoreContainer {
+      grid-template-columns:  repeat(5, 1fr);
+      gap: 0.5rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    &__scoreContainer {
+      padding: 0;
+      grid-template-columns:  repeat(5, 1fr);
+      gap: 0;
+    }
+
+    &__scorePoints {
+      font-size: 1.5rem;
+    }
+
+    &__scoreTeamContainer {
+      font-size: 0.625rem;
+    }
+
+    &__matchStatus {
+      font-size: 0.75rem;
+    }
+
+    &__statTitle {
+      font-size: 0.625rem;
+    }
+
+    &__statValue {
+      font-size: 0.875rem;
+    }
   }
 }

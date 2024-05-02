@@ -1,11 +1,11 @@
 .matchDetailsPlayByPlay {
   width: 100%;
-  padding: 1rem;
 
   &__filtersContainer {
     display: flex;
     justify-content: center;
     scroll-margin-top: 5rem;
+    padding: 1rem 0;
   }
 
   &__teamsContainer {
@@ -36,4 +36,27 @@
     margin-top: 3rem;
   }
 
+  @media (max-width: 768px) {
+    padding: 1rem 0;
+
+    &__filtersContainer {
+      align-items: start;
+      justify-content: flex-start;
+
+      > div {
+        width: 100%;
+      }
+    }
+
+    &__teamsContainer {
+      p {
+        font-size: 1rem;
+        font-weight: 500;
+      }
+    }
+
+    &__playsContainer {
+      margin-top: 1.5rem;
+    }
+  }
 }

@@ -3,6 +3,19 @@
   justify-content: center;
   margin-bottom: 1rem;
   margin-top: 1rem;
+  flex-direction: column;
+
+  &__sectionTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+
+  &__chartContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 
   table {
     width: fit-content;
@@ -58,5 +71,12 @@
   &__team {
     display: flex;
     align-items: center;
+  }
+
+  @media (max-width: 700px) {
+    &__sectionTitle {
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
   }
 }

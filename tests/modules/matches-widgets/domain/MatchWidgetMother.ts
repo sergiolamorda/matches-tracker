@@ -5,6 +5,10 @@ import { MatchWidget } from "../../../../src/modules/matches-widgets/domain/Matc
 
 const MatchWidgetFactory = Factory.define<MatchWidget>(() => ({
   id: faker.number.int(),
+  localLogo: faker.image.urlLoremFlickr({ category: 'abstract' }),
+  localName: faker.company.name(),
+  visitorLogo: faker.image.urlLoremFlickr({ category: 'abstract' }),
+  visitorName: faker.company.name(),
 }));
 
 export const MatchWidgetMother = {

@@ -1,57 +1,94 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card } from '../../components/Card/Card';
 import { Button } from '../../components/Button/Button';
 import { useMatchesWidgetsContext } from './MatchesWidgetsContext';
 import { useMatchContext } from '../match-details/MatchContext';
 import { MatchWidget } from '../../modules/matches-widgets/domain/MatchWidget';
+import { isMatchWidgetIdValid } from '../../modules/matches-widgets/domain/MatchWidgetId';
+import { Spinner } from '../../components/Spinner/Spinner';
+import { Form } from '../../components/Form/Form';
+import { Input } from '../../components/Input/Input';
+
+import styles from './AddMatchWidgetForm.module.scss';
 
 export function AddMatchWidgetForm() {
   const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  const { createMatchWidget } = useMatchesWidgetsContext();
+  const { createMatchWidget, matchesWidgets } = useMatchesWidgetsContext();
   const { getMatch } = useMatchContext();
 
   const submitForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsSubmitting(true);
+    setError(null);
 
     const { id } = event.target.elements;
 
-    if (!id) {
+    const idValue = parseInt(id.value);
+
+    if (!isMatchWidgetIdValid(idValue)) {
+      setError('ID no válido');
+      setIsSubmitting(false);
       return;
     }
 
-    const match = await getMatch(parseInt(id.value));
+    if (matchesWidgets.find((widget: MatchWidget) => widget.id === idValue)) {
+      setError('El partido ya está añadido');
+      setIsSubmitting(false);
+      return;
+    }
+
+    const match = await getMatch(idValue);
 
     if (!match) {
+      setError('El ID no corresponde a ningún partido');
+      setIsSubmitting(false);
       return;
     }
 
-    const newMatchWidget = {
-      id: id.value,
-      name: `${match.localTeam.shortName} vs ${match.visitorTeam.shortName}`
-    } as MatchWidget;
+    createMatchWidget({
+      id: idValue,
+      localLogo: match.localTeam.logo,
+      localName: match.localTeam.shortName,
+      visitorLogo: match.visitorTeam.logo,
+      visitorName: match.visitorTeam.shortName,
+    });
 
-    createMatchWidget(newMatchWidget);
-
-    // // const error = await
-    
-    // // const name = formData.get('name') as string;
-    // console.log(name);
+    setIsFormVisible(false);
+    setIsSubmitting(false);
   }
-
 
   return (
     <Card>
-      <div>
+      <div className={styles.addMatchWidgetForm}>
         {!isFormVisible && (
-          <Button onClick={() => setIsFormVisible(true)}>Añadir partido</Button>
+          <div className={styles.addMatchWidgetForm__initialState}>
+            <Button onClick={() => setIsFormVisible(true)}>Añadir partido</Button>
+          </div>
         )}
         {isFormVisible && (
-          <form onSubmit={submitForm}>
-            <input type="text" name="id" placeholder="ID" />
-            <Button type="submit">Añadir</Button>
-          </form>
+          isSubmitting ? (
+            <Spinner size="small" />
+          ) : (
+            <>
+              <h3>Añade un nuevo partido</h3>
+              <Form onSubmit={submitForm}>
+                <Input 
+                  id="id"
+                  type="number"
+                  name="id" 
+                  placeholder="ID"
+                  label='Introduce el ID del partido'
+                  error={error}
+                  autoComplete="off"
+                />
+                <Button type="submit" fullwidth>Añadir partido</Button>
+              </Form>
+            </>
+          )
         )}
       </div>
     </Card>
