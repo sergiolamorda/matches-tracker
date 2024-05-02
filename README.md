@@ -4,6 +4,35 @@ Este proyecto está creado con arquitectura hexagonal (Ports and Adapters) aplic
 
 La arquitectura hexagonal junto al patrón "repository", permite testear el código mockeando los datos del adaptador de forma muy sencilla. Tanto para los test e2e (cypress) cómo para los test unitarios (jest) he utilizado "testing-library" para testear siempre desde el punto de vista del usuario y no desde el punto de vista de la programación.
 
+Además de la arquitectura hexagonal, he utilizado react con Typescript para aumentar la robustez del código y minimizar futuros bugs y errores.
+
+Para manejar y compartir el estado entre los distintos componentes he decidido no utilizar ninguna librería de control de store cómo redux ya que está cada vez más en desuso por la complejidad que añade a la lógica y la alta cohesión con el código. En su lugar he utilizado el contexto nativo que proporciona React.
+
+## Paso para probar el proyecto
+
+1. Clonar el repositorio
+2. Clonar .env.example a .env y establecer la API KEY
+3. Instalar dependencias y ejecutar el servicio
+
+```bash
+npm install
+npm run dev
+```
+
+### Pasos para ejecutar los tests
+
+**Test unitarios (jest)**:
+
+```bash
+npm run test
+```
+
+**Test de aceptación** (con la aplicación levantada):
+
+```bash
+npm run cy:run
+```
+
 ## Estructura de archivos
 
 - **/src**:

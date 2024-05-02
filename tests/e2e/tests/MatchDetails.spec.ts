@@ -35,7 +35,7 @@ describe('MatchDetails View', () => {
       cy.findByRole('tab', { name: `${period.period}P` }).click();
       period.events.forEach((event) => {
         // expect 1 or more
-        cy.findAllByText(new RegExp(event), "i").should('exist');
+        cy.findAllByText(new RegExp(event, "i")).should('exist');
       })
     })
   });

@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Card } from '../../components/Card/Card';
 import { Button } from '../../components/Button/Button';
 import { useMatchesWidgetsContext } from './MatchesWidgetsContext';
@@ -20,12 +20,14 @@ export function AddMatchWidgetForm() {
   const { createMatchWidget, matchesWidgets } = useMatchesWidgetsContext();
   const { getMatch } = useMatchContext();
 
-  const submitForm = async (event: React.FormEvent<HTMLFormElement>) => {
+  const submitForm = async (event: React.FormEvent) => {
     event.preventDefault();
     setIsSubmitting(true);
     setError(null);
 
-    const { id } = event.target.elements;
+    const form = event.target as HTMLFormElement;
+
+    const id = form.elements.namedItem('id') as HTMLInputElement;
 
     const idValue = parseInt(id.value);
 

@@ -1,7 +1,7 @@
 import type { Match } from '../domain/Match';
 import type { Team } from "../domain/Team";
 import type { Period } from "../domain/Period";
-import { MatchEvent, isEndMatchEvent } from "../domain/MatchEvent";
+import { MatchEvent } from "../domain/MatchEvent";
 import type { Player } from "../domain/Player";
 import type { PlayerStatistics } from "../domain/PlayerStatistics";
 import { MatchRepository } from "../domain/MatchRepository";
@@ -9,7 +9,7 @@ import { MatchRepository } from "../domain/MatchRepository";
 const ENDPOINT = 'https://api2.acb.com/api/v1/openapilive/PlayByPlay/matchevents';
 const TOKEN = import.meta.env.VITE_ACB_PUBLIC_TOKEN;
 
-import EXAMPLE_RESPONSE from '../../../response_example.json';
+// import EXAMPLE_RESPONSE from '../../../response_example.json';
 
 export function createAcbApiMatchRepository(): MatchRepository {
   return {

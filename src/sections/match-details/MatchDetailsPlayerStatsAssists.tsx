@@ -14,7 +14,7 @@ export function MatchDetailsPlayerStatsAssists({ match }: { match: Match }) {
     return (
       <Card key={`rebound-player-${player.id}`}>
         <div className={styles.matchDetailsPlayerStatsAssists__playerCard}>
-          <img src={player.facePicture} alt={player.name} />
+          {player.facePicture && <img src={player.facePicture} alt={player.name} />}
           <div className={styles.matchDetailsPlayerStatsAssists__playerInfo}>
             <div className={styles.matchDetailsPlayerStatsAssists__playerName}>{player.name}</div>
             <div className={styles.matchDetailsPlayerStatsAssists__playerRebound}>{player.statistics.asis} Asistencias</div>
@@ -81,11 +81,5 @@ export function MatchDetailsPlayerStatsAssists({ match }: { match: Match }) {
         </div>
       </div>
     </div>
-
-
-    // <div className={styles.matchDetailsPlayerStatsAssists}>
-    //   {renderTable(match.localTeam.players)}
-    //   {renderTable(match.visitorTeam.players)}
-    // </div>
   )
 }

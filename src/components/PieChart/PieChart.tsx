@@ -24,10 +24,16 @@ export function PieChart({
         '--thickness': `${thickness}px`,
         '--color': color,
         '--width': `${width}px`,
-      }}
+      } as React.CSSProperties}
     >
       {label && <div>{label}</div>}
-      {!label && <div>{percentage.toFixed(0) | 0}%</div>}
+      {!label && <div>
+        {percentage ? 
+          (
+            `${percentage.toFixed(0)}%`
+          ): `0%`
+        }
+      </div>}
     </div>
   )
 }

@@ -1,5 +1,4 @@
 import { Match } from "../../modules/matches/domain/Match"
-import { MatchEvent } from "../../modules/matches/domain/MatchEvent"
 import { Team } from "../../modules/matches/domain/Team"
 import { isMatchEventScored } from "../../modules/matches/domain/MatchEvent";
 import { Card } from "../../components/Card/Card";

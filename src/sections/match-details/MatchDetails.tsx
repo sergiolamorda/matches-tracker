@@ -14,16 +14,14 @@ import { Tabs } from '../../components/Tabs/Tabs';
 import { Tab } from '../../components/Tabs/Tab';
 import { TabPanel } from '../../components/Tabs/TabPanel';
 
+import { SkeletonTheme } from "react-loading-skeleton";
+
 export function MatchDetails() {
   const { matchId } = useParams() as { matchId: string };
   const { getMatch } = useMatchContext();
   const [match, setMatch] = useState<Match>();
   const [loading, setLoading] = useState(true);
   // const [error, setError] = useState();
-
-  if (!matchId === undefined) {
-    return;
-  }
 
   useEffect(() => {
     setLoading(true);
@@ -42,39 +40,53 @@ export function MatchDetails() {
   
   return (    
     <>
-      {loading && (
-        <p>Cargando...</p>
-      )}
-      {!loading && !match && (
-        <p>No se encontró el partido, <Link to="/">volver al inicio</Link></p>
-      )}
-      {!loading && match && (
-        <div className={styles.matchDetails}>
-          <MatchDetailsHeader match={match} />
+      {!loading && !match ? 
+        (
           <Section>
             <Container>
-              <TabsContextProvider defaultTab={1}>
-                <>
-                  <Tabs>
-                    <Tab tab={1} label="Play-By-Play" />
-                    <Tab tab={2} label="Jugadores" />
-                    <Tab tab={3} label="Diferencia de puntos" />
-                  </Tabs>
-                  <TabPanel tab={1}>
-                    <MatchDetailsPlayByPlay match={match} />
-                  </TabPanel>
-                  <TabPanel tab={2}>
-                    <MatchDetailsPlayerStats match={match} />
-                  </TabPanel>
-                  <TabPanel tab={3}>
-                    <MatchDetailsMostPointsDifference match={match} />
-                  </TabPanel>
-                </>
-              </TabsContextProvider>
+              <p>No se encontró el partido, <Link to="/">volver al inicio</Link></p>
             </Container>
           </Section>
-        </div>
-      )}
+        ):
+        (
+          <div className={styles.matchDetails}>
+            <MatchDetailsHeader match={match} />
+            <Section>
+              <Container>
+                <SkeletonTheme baseColor="#f3f3f3" highlightColor="#f6f6f6">
+                  <TabsContextProvider defaultTab={1}>
+                    <>
+                      <Tabs>
+                        <Tab tab={1} label="Play-By-Play" />
+                        <Tab tab={2} label="Jugadores" />
+                        <Tab tab={3} label="Diferencia de puntos" />
+                      </Tabs>
+                      <TabPanel tab={1}>
+                        <MatchDetailsPlayByPlay match={match} />
+                      </TabPanel>
+                      <TabPanel tab={2}>
+                        {match ? (
+                          <MatchDetailsPlayerStats match={match} />
+                        ) : (
+                          <p></p>
+                        )}
+                      </TabPanel>
+                      <TabPanel tab={3}>
+                        {match ? (
+                          <MatchDetailsMostPointsDifference match={match} />
+                        ) : (
+                          <p></p>
+                        
+                        )}
+                      </TabPanel>
+                    </>
+                  </TabsContextProvider>
+                </SkeletonTheme>
+              </Container>
+            </Section>
+          </div>
+        )
+      }
     </>
   )
 }

@@ -1,21 +1,38 @@
+import Skeleton from "react-loading-skeleton";
+
 import { MatchEvent } from "../../modules/matches/domain/MatchEvent";
 import { isMatchEventScored } from "../../modules/matches/domain/MatchEvent";
-import { Match } from "../../modules/matches/domain/Match";
 
 import styles from './MatchDetailsPlayByPlayEvents.module.scss'
 import { Player } from "../../modules/matches/domain/Player";
 
-export function MatchDetailsPlayByPlayEvents({ matchEvents, match }: { matchEvents: Array<MatchEvent>, match: Match}) {
-  
-  function renderEvent(event: MatchEvent): React.ReactElement | null{
+export function MatchDetailsPlayByPlayEvents({ 
+  matchEvents,
+}: { 
+  matchEvents: Array<MatchEvent>|Array<undefined>,
+}) {
+  function renderEvent(event: MatchEvent|undefined): React.ReactElement | null{
     return (
       <>
         <div>
-          {event.description}
-          {renderPlayer(event.player)}
+          {event ? 
+            (
+              <>
+                {event.description}
+                {renderPlayer(event.player)}
+              </>
+            ) : (
+              <Skeleton width={100} height={20} />
+            )
+          }          
         </div>
-        <img src={event.team.logo} />
-        {/* {event.player?.facePicture && <img src={event.player.facePicture} />} */}
+        {event ? 
+          (
+            <img src={event.team.logo} />
+          ) : (
+            <Skeleton width={20} height={20} />
+          )
+        }
       </>
     )
   }
@@ -35,15 +52,26 @@ export function MatchDetailsPlayByPlayEvents({ matchEvents, match }: { matchEven
   return (
     <div className={styles.matchDetailsPlayByPlayEvents}>
       {matchEvents.map((matchEvent, index) => (
-        <div key={`event-${index}-${matchEvent.periodId}`} className={styles.matchDetailsPlayByPlayEvents__event}>
+        <div key={`event-${index}-${matchEvent?.periodId || index}`} className={styles.matchDetailsPlayByPlayEvents__event}>
           <div className={styles.matchDetailsPlayByPlayEvents__eventDescription}>
             <div className={styles.matchDetailsPlayByPlayEvents__eventDescriptionLocalEvent}>
-              {matchEvent.localEvent && renderEvent(matchEvent)}
+              {matchEvent ? 
+                (
+                  matchEvent.localEvent && renderEvent(matchEvent)
+                ) : renderEvent(undefined)
+              }
+              
             </div>
           </div>
           <div className={styles.matchDetailsPlayByPlayEvents__cronoContainer}>
-            <div className={styles.matchDetailsPlayByPlayEvents__crono}>{matchEvent.crono.slice(3)}</div>
-            {isMatchEventScored(matchEvent) && (
+            <div className={styles.matchDetailsPlayByPlayEvents__crono}>
+              {matchEvent ? (
+                matchEvent.crono.slice(3)
+              ): (
+                <Skeleton width={40} />
+              )}
+            </div>
+            {matchEvent && isMatchEventScored(matchEvent) && (
               <div className={styles.matchDetailsPlayByPlayEvents__score}>
                 {matchEvent.localScore} - {matchEvent.visitorScore}
               </div>
@@ -51,7 +79,11 @@ export function MatchDetailsPlayByPlayEvents({ matchEvents, match }: { matchEven
           </div>
           <div className={styles.matchDetailsPlayByPlayEvents__eventDescription}>
             <div className={styles.matchDetailsPlayByPlayEvents__eventDescriptionVisitorEvent}>
-              {!matchEvent.localEvent && renderEvent(matchEvent)}
+              {matchEvent ? 
+                (
+                  !matchEvent.localEvent && renderEvent(matchEvent)
+                ) : renderEvent(undefined)
+              }
             </div>
           </div>
         </div>

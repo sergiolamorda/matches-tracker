@@ -11,6 +11,8 @@ export function Input({
   error,
   size,
   fullWidth = true,
+  name,
+  autoComplete,
   ...props
 }: {
   type?: 'text' | 'password' | 'number' | 'email';
@@ -22,7 +24,8 @@ export function Input({
   error?: string|null;
   size?: 'small' | 'medium' | 'large';
   fullWidth?: boolean;
-  [key: string]: any;
+  autoComplete?: string;
+  name?: string;
 }) {
   return (
     <div className={styles.inputWrapper} data-size={size} data-full-width={fullWidth}>
@@ -34,6 +37,8 @@ export function Input({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
+        name={name}
+        autoComplete={autoComplete}
         {...props}
       />
       {error && <span className={styles.error}>{error}</span>}

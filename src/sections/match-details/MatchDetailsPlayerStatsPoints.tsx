@@ -6,37 +6,6 @@ import { PieChart } from '../../components/PieChart/PieChart';
 import styles  from './MatchDetailsPlayerStatsPoints.module.scss';
 
 export function MatchDetailsPlayerStatsPoints({ match }: { match: Match }) {
-  function getPlayerPointsStats(player: Player): {
-    triedShots: {
-      onePointShot: number,
-      twoPointsShot: number,
-      threePointsShot: number,
-      total: number,
-    },
-    succesShots: {
-      onePointShot: number,
-      twoPointsShot: number,
-      threePointsShot: number,
-      total: number,
-    },
-  } {
-    const triedShots = {
-      onePointShot: player.statistics.tried.onePointShot,
-      twoPointsShot: player.statistics.tried.twoPointsShot,
-      threePointsShot: player.statistics.tried.threePointsShot,
-      total: player.statistics.tried.onePointShot + player.statistics.tried.twoPointsShot + player.statistics.tried.threePointsShot,
-    }
-
-    const succesShots = {
-      onePointShot: player.statistics.success.onePointShot,
-      twoPointsShot: player.statistics.success.twoPointsShot,
-      threePointsShot: player.statistics.success.threePointsShot,
-      total: player.statistics.success.onePointShot + player.statistics.success.twoPointsShot + player.statistics.success.threePointsShot,
-    }
-
-    return { triedShots, succesShots }
-  }
-
   function orderPlayersByPoints(players: Player[]) {
     return players.sort((a, b) => b.statistics.points - a.statistics.points);
   }
@@ -49,7 +18,7 @@ export function MatchDetailsPlayerStatsPoints({ match }: { match: Match }) {
             <div className={styles.matchDetailsPlayerStatsPoints__playerCardtitle}>{player.name}</div>
             <div className={styles.matchDetailsPlayerStatsPoints__playerCardPoints}>{player.statistics.points} puntos</div>
             <div className={styles.matchDetailsPlayerStatsPoints__playerCardPicture}>
-              <img src={player.bodyPicture} alt={player.name} />
+              {player.bodyPicture && <img src={player.bodyPicture} alt={player.name} />}
             </div>
           </div>
           <div className={styles.matchDetailsPlayerStatsPoints__playerCardStats}>

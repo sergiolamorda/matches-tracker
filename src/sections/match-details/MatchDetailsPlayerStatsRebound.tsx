@@ -14,7 +14,7 @@ export function MatchDetailsPlayerStatsRebound({ match }: { match: Match }) {
     return (
       <Card key={`rebound-player-${player.id}`}>
         <div className={styles.matchDetailsPlayerStatsRebound__playerCard}>
-          <img src={player.facePicture} alt={player.name} />
+          {player.facePicture && <img src={player.facePicture} alt={player.name} />}
           <div className={styles.matchDetailsPlayerStatsRebound__playerInfo}>
             <div className={styles.matchDetailsPlayerStatsRebound__playerName}>{player.name}</div>
             <div className={styles.matchDetailsPlayerStatsRebound__playerRebound}>{player.statistics.totalRebound} Rebotes</div>

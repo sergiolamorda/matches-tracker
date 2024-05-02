@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext } from "react";
 import { MatchRepository } from "../../modules/matches/domain/MatchRepository";
 import { getMatch } from "../../modules/matches/application/get/getMatch";
 import { Match } from "../../modules/matches/domain/Match";
